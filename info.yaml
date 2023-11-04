@@ -1,4 +1,4 @@
--- 
+---
 # Tiny Tapeout project information
 project:
   wokwi_id:    0        
@@ -14,7 +14,7 @@ project:
     - GCD/src/verilog/gcd_dp.sv
   top_module:  "tt_um_sobel_gcd_unal"      
   tiles: "1x2"    
-yaml_version: 1
+yaml_version: 4
 documentation: 
   author:       "Kevin Dario Patiño Sosa, Diana Natali Maldonado Ramirez and Linda Julieth Mendez Aroca"      
   title:        "Sobel Filter and Greatest Common Divider"    
