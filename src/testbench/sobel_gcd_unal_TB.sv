@@ -40,13 +40,16 @@ module sobel_gcd_unal_TB ();
     
     assign uio_in[6] = sobel_allowed;
     assign uio_in[7] = sobel_en;
+    
+    logic output_ctl;
+
 
     tt_um_sobel_gcd_unal uut(
         .clk(clk_i),
         .rst_n(nreset_i),
         .uio_out(uio_out),
         .uio_in(uio_in),
-        .ui_in('0)
+        .ui_in({7'b0,output_ctl})
     );
 
 
@@ -94,7 +97,7 @@ module sobel_gcd_unal_TB ();
     initial begin
         $dumpfile("sobel_gcd_unal_TB.vcd");
         $dumpvars(-1, uut);
-
+        #0 output_ctl = 1'b0;
         #0 gcd_en = 1'b0;
         #0 nreset_i = 1'b0;
         #0 sobel_en = 1'b0;
@@ -113,12 +116,13 @@ module sobel_gcd_unal_TB ();
         #100 gcd_en = 1'b1;
         @(posedge uio_out[5]) #500 spi_transfer_pi(16'h0000);
 
+        #0 output_ctl = 1'b1;
         #0 sobel_allowed = 1'b1;
-        #500 spi_transfer_pi({1'b1,15'hAAAA}); //Enable calibration
+        #500 spi_transfer_pi({1'b1,15'hAAA0}); //Enable calibration
         #0 sobel_en = 1'b1;
         #100 sobel_en = 1'b0;
         
-        #500 spi_transfer_pi({1'b1,15'hA0A0}); //Enable calibration
+        #500 spi_transfer_pi({1'b1,15'hA0A1}); //Enable calibration
         #0 sobel_en = 1'b1;
         #100 sobel_en = 1'b0;
 
@@ -146,9 +150,13 @@ module sobel_gcd_unal_TB ();
         #500 spi_transfer_pi({1'b1,15'hAAAA}); //Enable calibration
         #0 sobel_en = 1'b1;
         #100 sobel_en = 1'b0;
-        #500 spi_transfer_pi({1'b1,15'hAAAA}); //Enable calibration
+        
+        @(posedge uio_out[5])   
+        spi_transfer_pi({1'b1,15'hAAA9}); //Enable calibration
         #0 sobel_en = 1'b1;
         #100 sobel_en = 1'b0;
+
+        
         #500 spi_transfer_pi({1'b1,15'hAAAA}); //Enable calibration
         #0 sobel_en = 1'b1;
         #100 sobel_en = 1'b0;

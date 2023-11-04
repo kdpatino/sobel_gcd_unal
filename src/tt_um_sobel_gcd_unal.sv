@@ -11,10 +11,10 @@ module tt_um_sobel_gcd_unal (
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
 );
-    assign uio_oe = 8'b11101000; 
+    assign uio_oe = 8'b00101000; 
     assign uio_out[2:0] = '0;
     assign uio_out[4] = '0;
-    assign uio_out[6] = '0;
+    assign uio_out[7:6] = '0;
     assign uo_out[7:0] = '0;
     
     logic nreset_async_i;
