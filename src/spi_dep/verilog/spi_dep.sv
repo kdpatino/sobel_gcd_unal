@@ -1,3 +1,6 @@
+`include "../../sobel_enhancement/src/verilog/sobel_control.svh"  //Maybe need to chnage this
+`include "../../GCD/src/include/sobel_control.svh"  //Maybe need to chnage this
+
 module sobel_gcd_spi #(
     parameter STREAM_DATA_WIDTH = 32
     ,parameter CH_COUNT = 8
@@ -20,12 +23,12 @@ module sobel_gcd_spi #(
 
     //Sobel Interface
     ,output logic    prep_allowed
-    ,in logic    [PIXEL_WIDTH-1:0] input_px_gray_i
+    ,output logic    [PIXEL_WIDTH-1:0] input_px_gray_o
 
-    ,output logic   [PIXEL_WIDTH-1:0] output_px_sobel_o
+    ,input logic   [PIXEL_WIDTH-1:0] output_px_sobel_i
 
-    ,output logic   pixel_completed_o
-    ,output logic   prep_completed_o
+    ,input logic   pixel_completed_i
+    ,input logic   prep_completed_i
 );
     // nreset synchronization
     logic nreset_i;
