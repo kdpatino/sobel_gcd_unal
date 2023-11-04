@@ -99,7 +99,6 @@ module sobel_control (
                     prep_completed <= 'b0;
                 end
                 MATRIX_KERNEL: begin
-                    pixel_completed <= 'b0;
                     if (counter_sobel == 2 | counter_sobel == 5 | counter_sobel == 8)begin
 				        j_sobel <= (i_sobel == IMAGE_HEIGHT-1 ? (j_sobel + 1) : j_sobel);
                         if (i_sobel < IMAGE_HEIGHT-1) begin
@@ -111,7 +110,10 @@ module sobel_control (
 
                     case(counter_sobel)
                         0: sobel_pixels.vector0.pix0 <= input_px_gray_i;
-                        1: sobel_pixels.vector0.pix1 <= input_px_gray_i;
+                        1: begin
+                            sobel_pixels.vector0.pix1 <= input_px_gray_i;
+                            pixel_completed <= 'b0;
+                        end
                         2: sobel_pixels.vector0.pix2 <= input_px_gray_i;
                         3: sobel_pixels.vector1.pix0 <= input_px_gray_i;
                         4: sobel_pixels.vector1.pix1 <= input_px_gray_i;

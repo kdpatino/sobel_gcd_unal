@@ -29,16 +29,24 @@ module sobel_gcd_unal_TB ();
     logic [7:0] uio_in;  // IOs: Bidirectional Input path
     logic [7:0] uio_out;  // IOs: Bidirectional Output path
 
-
+    logic gcd_en;
+    logic sobel_allowed;
+    logic sobel_en;
+    
     assign uio_in[0] = rpi_sck;
     assign uio_in[1] = rpi_mosi;
     assign uio_in[2] = rpi_ss;
+    assign uio_in[4] = gcd_en;
+    
+    assign uio_in[6] = sobel_allowed;
+    assign uio_in[7] = sobel_en;
 
     tt_um_sobel_gcd_unal uut(
         .clk(clk_i),
         .rst_n(nreset_i),
         .uio_out(uio_out),
-        .uio_in(uio_in)
+        .uio_in(uio_in),
+        .ui_in('0)
     );
 
 
@@ -87,16 +95,67 @@ module sobel_gcd_unal_TB ();
         $dumpfile("sobel_gcd_unal_TB.vcd");
         $dumpvars(-1, uut);
 
+        #0 gcd_en = 1'b0;
         #0 nreset_i = 1'b0;
+        #0 sobel_en = 1'b0;
+        #0 sobel_allowed = 1'b0;
         data_rx_rpi = '0;
         #200 @(negedge clk_i) nreset_i = 1'b1;
-        #500 spi_transfer_pi(16'h2001); //Enable calibration
-        #500 spi_transfer_pi(16'h0001); //Enable calibration
-        // #500 spi_transfer_pi(16'h1200); //Disable Calibration
-        // #500 spi_transfer_pi(16'h1307); //Set channel count 8
-        // #500 spi_transfer_pi(16'h1300); //Set channel count 0
-        // #500 spi_transfer_pi(16'h1101); //Disable ADC
-        // #500 spi_transfer_pi(16'h1001); //Enable ADC
+        #500 spi_transfer_pi(16'h2004); //Enable calibration
+        #500 spi_transfer_pi(16'h0008); //Enable calibration
+        #100 gcd_en = 1'b1;
+        @(posedge uio_out[5]) #500 spi_transfer_pi(16'h0000);
+        #1000 gcd_en = 1'b0;
+        #0 nreset_i = 1'b0;
+        #200 @(negedge clk_i) nreset_i = 1'b1;
+        #500 spi_transfer_pi(16'h2044); //Enable calibration
+        #500 spi_transfer_pi(16'h0088); //Enable calibration
+        #100 gcd_en = 1'b1;
+        @(posedge uio_out[5]) #500 spi_transfer_pi(16'h0000);
+
+        #0 sobel_allowed = 1'b1;
+        #500 spi_transfer_pi({1'b1,15'hAAAA}); //Enable calibration
+        #0 sobel_en = 1'b1;
+        #100 sobel_en = 1'b0;
+        
+        #500 spi_transfer_pi({1'b1,15'hA0A0}); //Enable calibration
+        #0 sobel_en = 1'b1;
+        #100 sobel_en = 1'b0;
+
+        #500 spi_transfer_pi({1'b1,15'hABAB}); //Enable calibration
+        #0 sobel_en = 1'b1;
+        #100 sobel_en = 1'b0;
+
+        #500 spi_transfer_pi({1'b1,15'hAAAA}); //Enable calibration
+        #0 sobel_en = 1'b1;
+        #100 sobel_en = 1'b0;
+
+        #500 spi_transfer_pi({1'b1,15'hAAAA}); //Enable calibration
+        #0 sobel_en = 1'b1;
+        #100 sobel_en = 1'b0;
+        
+        #500 spi_transfer_pi({1'b1,15'hAAAA}); //Enable calibration
+        #0 sobel_en = 1'b1;
+        #100 sobel_en = 1'b0;
+        #500 spi_transfer_pi({1'b1,15'hAAAA}); //Enable calibration
+        #0 sobel_en = 1'b1;
+        #100 sobel_en = 1'b0;
+        #500 spi_transfer_pi({1'b1,15'hAAAA}); //Enable calibration
+        #0 sobel_en = 1'b1;
+        #100 sobel_en = 1'b0;
+        #500 spi_transfer_pi({1'b1,15'hAAAA}); //Enable calibration
+        #0 sobel_en = 1'b1;
+        #100 sobel_en = 1'b0;
+        #500 spi_transfer_pi({1'b1,15'hAAAA}); //Enable calibration
+        #0 sobel_en = 1'b1;
+        #100 sobel_en = 1'b0;
+        #500 spi_transfer_pi({1'b1,15'hAAAA}); //Enable calibration
+        #0 sobel_en = 1'b1;
+        #100 sobel_en = 1'b0;
+        
+        
+        
+        
         repeat(364000) @(posedge clk_i);
         $finish;
     end
