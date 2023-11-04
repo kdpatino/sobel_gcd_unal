@@ -2,8 +2,7 @@
 `include "../../GCD/src/include/sobel_control.svh"  //Maybe need to chnage this
 
 module sobel_gcd_spi #(
-    parameter STREAM_DATA_WIDTH = 32
-    ,parameter CH_COUNT = 8
+    parameter STREAM_DATA_WIDTH = 16
 )(
     input logic clk_i
     ,input logic nreset_async_i
@@ -152,20 +151,16 @@ module sobel_gcd_spi #(
     //Internal Memory Map
     always_ff @(posedge clk_i or negedge nreset_i) begin
         if(!nreset_i) begin
+            operand_a_o <= '0;
         end else begin
-            case(adc_data_rx[15:8])
-                8'h10: begin
-                    adc_init_o <= adc_data_rx[0];
-                    adc_stop_o <= 0;
-                end
-                8'h11: begin
-                    adc_stop_o <= adc_data_rx[0];
-                    adc_init_o <= 0;
-                end
-                8'h12: adc_calib_en_o <= adc_data_rx[0];
-                8'h13: adc_channel_limit_o[$clog2(CH_COUNT)-1:0] <= adc_data_rx[$clog2(CH_COUNT)-1:0];
-                8'hAA: adc_valid_data_tx_o <= adc_data_rx[1];
-            endcase
+            if (adc_data_rx[15])
+                input_px_gray_o <= adc_data_rx[PIXEL_WIDTH-1:0];
+            else begin
+                case(adc_data_rx[14:13])
+                2'b00: operand_a_o <= adc_data_rx[DATA_WIDTH-1:0];
+                2'b01: operand_b_o <= adc_data_rx[DATA_WIDTH-1:0];
+                endcase
+            end
         end
     end
 
