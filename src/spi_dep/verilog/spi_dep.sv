@@ -12,17 +12,15 @@ module sobel_gcd_spi #(
     ,output logic spi_sdo_o
 
     //GCD Interface
-    ,input logic [DATA_WIDTH-1:0] operand_a_i 
-    ,input logic [DATA_WIDTH-1:0] operand_b_i
-    ,input logic gcd_enable_i
-    ,input logic clk_i
-    ,input logic nreset_i
-    ,output logic [DATA_WIDTH-1:0] gcd_o
-    ,output logic gcd_done_o
+    ,output logic [DATA_WIDTH-1:0] operand_a_o 
+    ,output logic [DATA_WIDTH-1:0] operand_b_o
+    ,output logic gcd_enable_o
+    ,input logic [DATA_WIDTH-1:0] gcd_o
+    ,input logic gcd_done_i
 
     //Sobel Interface
-    ,input logic    prep_allowed
-    ,input logic    [PIXEL_WIDTH-1:0] input_px_gray_i
+    ,output logic    prep_allowed
+    ,in logic    [PIXEL_WIDTH-1:0] input_px_gray_i
 
     ,output logic   [PIXEL_WIDTH-1:0] output_px_sobel_o
 
@@ -33,12 +31,6 @@ module sobel_gcd_spi #(
     logic nreset_i;
     logic [STREAM_DATA_WIDTH-1:0] spi_data_rx;
 
-    spi_dep_async_nreset_synchronizer adc_spi_nreset_sync0 (
-        .clk_i(clk_i),
-        .async_nreset_i(nreset_async_i),
-        .tied_value_i(1'b1),
-        .nreset_o(nreset_i)
-    );
 
     logic [STREAM_DATA_WIDTH-1:0] adc_data_rx;
 
