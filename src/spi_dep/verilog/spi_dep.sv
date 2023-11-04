@@ -16,25 +16,21 @@ module sobel_gcd_spi #(
     //GCD Interface
     ,output logic [DATA_WIDTH-1:0] operand_a_o 
     ,output logic [DATA_WIDTH-1:0] operand_b_o
-    ,output logic gcd_enable_o
     ,input logic [DATA_WIDTH-1:0] gcd_o
-    ,input logic gcd_done_i
 
     //Sobel Interface
-    ,output logic    prep_allowed
     ,output logic    [PIXEL_WIDTH-1:0] input_px_gray_o
-
     ,input logic   [PIXEL_WIDTH-1:0] output_px_sobel_i
-
-    ,input logic   pixel_completed_i
-    ,input logic   prep_completed_i
 );
     // nreset synchronization
     logic nreset_i;
     logic [STREAM_DATA_WIDTH-1:0] spi_data_rx;
 
 
-    logic [STREAM_DATA_WIDTH-1:0] adc_data_rx;
+    logic [STREAM_DATA_WIDTH-1:0] data_rx;
+    logic [STREAM_DATA_WIDTH-1:0] data_tx; 
+
+    logic data_tx_sel;
 
     logic data_rdy;
     logic spi_rxtx_done;
@@ -125,15 +121,17 @@ module sobel_gcd_spi #(
     always_ff @(posedge clk_i or negedge nreset_i) begin
         if(!nreset_i) begin
             rxtx_done_reg <= '0;
-            adc_data_rx <= '0;
+            data_rx <= '0;
         end else begin
             rxtx_done_reg <= rxtx_done;
             if(rxtx_done_rising)
-                adc_data_rx <= spi_data_rx;
+                data_rx <= spi_data_rx;
             else
-                adc_data_rx <= adc_data_rx;
+                data_rx <= adc_data_rx;
         end
     end
+
+
     // SPI Slave Core
     spi_dep #(
         .WORD_SIZE(STREAM_DATA_WIDTH)
@@ -143,22 +141,33 @@ module sobel_gcd_spi #(
         ,.cs_i(spi_cs_i)
         ,.sdo_o(spi_sdo_o)
 
-        ,.data_tx_i({adc_frame_data[7:0], adc_frame_data[15:8]})
+        ,.data_tx_i({data_tx[7:0], data_tx[15:8]})
         ,.data_rx_o({spi_data_rx[7:0], spi_data_rx[15:8]})
         ,.rxtx_done_o(spi_rxtx_done)
     );
 
+
+    assign data_tx = data_tx_sel ? {1'b0,output_px_sobel_i} : {8'b0,gcd_o};
     //Internal Memory Map
     always_ff @(posedge clk_i or negedge nreset_i) begin
         if(!nreset_i) begin
             operand_a_o <= '0;
+            operand_b_o <= '0;
+            input_px_gray_o <= '0;
+            data_tx_sel <= '0;
         end else begin
-            if (adc_data_rx[15])
-                input_px_gray_o <= adc_data_rx[PIXEL_WIDTH-1:0];
+            if (data_rx[15])
+                input_px_gray_o <= data_rx[PIXEL_WIDTH-1:0];
+                data_tx_sel <= 1'b1;
             else begin
-                case(adc_data_rx[14:13])
-                2'b00: operand_a_o <= adc_data_rx[DATA_WIDTH-1:0];
-                2'b01: operand_b_o <= adc_data_rx[DATA_WIDTH-1:0];
+                data_tx_sel <= '0;
+                case(data_rx[14:13])
+                2'b00: operand_a_o <= data_rx[DATA_WIDTH-1:0];
+                2'b01: operand_b_o <= data_rx[DATA_WIDTH-1:0];
+                default: begin
+                    operand_a_o <= operand_a_o;
+                    operand_b_o <= operand_b_o;
+                end
                 endcase
             end
         end
