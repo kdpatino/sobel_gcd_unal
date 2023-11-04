@@ -10,8 +10,23 @@ module sobel_control (
         output logic   [PIXEL_WIDTH-1:0] output_px_sobel_o,
 
         output logic   pixel_completed_o,
-        output logic   prep_completed_o
+        input logic   pixel_enable_i
     );
+
+    logic pixel_en;
+    logic pixel_reg;
+
+    spi_dep_signal_synchronizer signal_sync0 (
+        .clk_i(clk_i),
+        .nreset_i(nreset_i),
+        .async_signal_i(pixel_enable_i),
+        .signal_o(pixel_en)
+    );
+
+    always_ff @(posedge clk_i or negedge nreset_i) begin
+        if(!nreset_i)  pixel_reg <= '0;
+        else pixel_reg <= pixel_en;
+    end
 
     logic [SOBEL_COUNTER_MAX_BITS:0] counter_sobel;
     logic [HEIGHT_COUNTER_BITS-1:0] i_sobel;
@@ -105,7 +120,8 @@ module sobel_control (
                         7: sobel_pixels.vector2.pix1 <= input_px_gray_i;
                         8: sobel_pixels.vector2.pix2 <= input_px_gray_i;
                     endcase
-                    counter_sobel <= counter_sobel + 1;
+                    if(pixel_en & ~pixel_reg) counter_sobel <= counter_sobel + 1;
+                    else counter_sobel <= counter_sobel;
                 end
                 NEXT_MATRIX: begin
                     counter_sobel <= 'b0;

@@ -42,12 +42,12 @@ module tt_um_sobel_gcd_unal (
     logic gcd_enable;
     logic prep_allowed;
     logic pixel_completed;
-    logic prep_completed;
+    logic pixel_en;
 
     assign gcd_enable = uio_in[4];
     assign uio_out[5] = ui_in[0] ? pixel_completed : gcd_done;
     assign prep_allowed = uio_in[6];
-    assign uio_out[7] = prep_completed;
+    assign pixel_en = uio_in[7];
 
     logic clk_i;
     assign clk_i = clk;
@@ -81,7 +81,7 @@ module tt_um_sobel_gcd_unal (
         ,.output_px_sobel_o(output_px_sobel)
 
         ,.pixel_completed_o(pixel_completed)
-        ,.prep_completed_o(prep_completed)
+        ,.pixel_enable_i(pixel_en)
     );
 
     sobel_gcd_spi spi0 (
