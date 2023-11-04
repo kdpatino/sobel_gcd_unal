@@ -5,7 +5,7 @@ module sobel_gcd_spi #(
     parameter STREAM_DATA_WIDTH = 16
 )(
     input logic clk_i
-    ,input logic nreset_async_i
+    ,input logic nreset_i
 
     //SPI interface
     ,input logic spi_sck_i
@@ -23,7 +23,6 @@ module sobel_gcd_spi #(
     ,input logic   [PIXEL_WIDTH-1:0] output_px_sobel_i
 );
     // nreset synchronization
-    logic nreset_i;
     logic [STREAM_DATA_WIDTH-1:0] spi_data_rx;
 
 

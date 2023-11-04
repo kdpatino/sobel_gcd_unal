@@ -5,7 +5,7 @@ module sobel_gcd_unal_TB ();
     logic  nreset_i;
 
     tt_um_sobel_gcd_unal uut(
-        .clk(sobel_clk_i),
+        .clk(clk_i),
         .rst_n(nreset_i) 
     );
 
