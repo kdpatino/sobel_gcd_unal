@@ -5,15 +5,15 @@ project:
   source_files:        
     - tt_um_sobel_gcd_unal.sv
     - async_nreset_synchronizer.sv
-    - spi_dev/verilog/spi_dep.sv
-    - spi_dev/verilog/adc_spi.sv
+    - spi_dep/verilog/spi_dep.sv
+    - spi_dep/verilog/adc_spi.sv
     - sobel_enhancement/src/verilog/sobel_control.sv
     - sobel_enhancement/src/verilog/sobel_core.sv
     - GCD/src/verilog/gcd_top.sv
     - GCD/src/verilog/gcd_fsm.sv
     - GCD/src/verilog/gcd_dp.sv
   top_module:  "tt_um_sobel_gcd_unal"      
-  tiles: "2x2"    
+  tiles: "1x2"    
 yaml_version: 4
 documentation: 
   author:       "Kevin Dario Patiño Sosa, Diana Natali Maldonado Ramirez and Linda Julieth Mendez Aroca"      
