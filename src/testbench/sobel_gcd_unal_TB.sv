@@ -90,7 +90,8 @@ module sobel_gcd_unal_TB ();
         #0 nreset_i = 1'b0;
         data_rx_rpi = '0;
         #200 @(negedge clk_i) nreset_i = 1'b1;
-        #500 spi_transfer_pi(16'h1201); //Enable calibration
+        #500 spi_transfer_pi(16'h2001); //Enable calibration
+        #500 spi_transfer_pi(16'h0001); //Enable calibration
         // #500 spi_transfer_pi(16'h1200); //Disable Calibration
         // #500 spi_transfer_pi(16'h1307); //Set channel count 8
         // #500 spi_transfer_pi(16'h1300); //Set channel count 0
