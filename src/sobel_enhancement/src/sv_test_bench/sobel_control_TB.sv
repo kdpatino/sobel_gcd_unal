@@ -30,7 +30,8 @@ module sobel_control_TB ();
     );
     
     initial begin
-        input_px_gray = 15'd0;
+        input_px_gray[1] = 'd0;
+        input_px_gray[0] = 'd1;
         $readmemh(`INFILE, image_memory, 0, `RAM_DEPTH-1);
         output_image = $fopen("output_image_sobel.txt","w");
         sobel_clk_i = 0;
