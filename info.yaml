@@ -3,17 +3,17 @@
 project:
   wokwi_id:    0        
   source_files:        
+    - GCD/src/include/gcd.svh
+    - sobel_enhancement/src/verilog/sobel_control.svh
     - tt_um_sobel_gcd_unal.sv
     - async_nreset_synchronizer.sv
     - spi_dep/verilog/spi_dep.sv
     - spi_dep/verilog/adc_spi.sv
     - sobel_enhancement/src/verilog/sobel_control.sv
-    - sobel_enhancement/src/verilog/sobel_control.svh
     - sobel_enhancement/src/verilog/sobel_core.sv
     - GCD/src/verilog/gcd_top.sv
     - GCD/src/verilog/gcd_fsm.sv
     - GCD/src/verilog/gcd_dp.sv
-    - GCD/src/include/gcd.svh
   top_module:  "tt_um_sobel_gcd_unal"      
   tiles: "1x2"    
 yaml_version: 4
