@@ -19,7 +19,7 @@ documentation:
   author:       "Kevin Dario Patiño Sosa, Diana Natali Maldonado Ramirez and Linda Julieth Mendez Aroca"      
   title:        "Sobel Filter and Greatest Common Divider"    
   language:     "System Verilog" 
-  description:  "The project encompasses two distinct functionalities.  		The first functionality is an edge detection filter that   		utilizes the Sobel algorithm, while the second functionality   		calculates the greatest common divisor of two positive 8-bit numbers."     
+  description:  "The project encompasses two distinct functionalities. GCD and Sobel Filter"     
   how_it_works: |
       Sobel: 
       To process an image, a 3x3 kernel is convoluted with a matrix of neighboring pixels 
