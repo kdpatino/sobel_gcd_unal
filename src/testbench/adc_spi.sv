@@ -1,0 +1,1 @@
+/home/dnmaldonador/Documents/sobel_gcd_unal/src/spi_dep/verilog/adc_spi.sv

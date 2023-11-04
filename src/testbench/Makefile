@@ -1,5 +1,5 @@
 
-SRC_FOLDER=/home/kevin/unal/OpenLane/designs/sobel_gcd_unal/src
+SRC_FOLDER=/home/dnmaldonador/Documents/sobel_gcd_unal/src
 TESTBENCH = sobel_gcd_unal
 
 GCD_SRC=gcd_dp.sv \
@@ -24,11 +24,8 @@ all: simulate
 
 
 link_src:
-	find $(SRC_FOLDER) -name '*.v' -exec ln -s -f {} ';'
-	find $(SRC_FOLDER) -name '*.sv' -exec ln -s -f {} ';'
-	find $(SRC_FOLDER) -name '*.svh' -exec ln -s -f {} ';'
-
-
+	find "$(SRC_FOLDER)" -type d -name 'testbench' -prune -o -type f -name '*.sv' -exec ln -s -f {} ';'
+	find "$(SRC_FOLDER)" -type d -name 'testbench' -prune -o -type f -name '*.svh' -exec ln -s -f {} ';'
 
 simulate: 
 	iverilog -o $(TESTBENCH)_TB.vvp -g2012 $(SRC)
@@ -40,5 +37,6 @@ gtkwave: simulate
 
 clean:
 	rm -rf *.bin *.jpg *.txt *.blif *.out *.vvp *.vcd *~
+	rm $(GCD_SRC) $(SOBEL_SRC) 
 
 .PHONY: all clean

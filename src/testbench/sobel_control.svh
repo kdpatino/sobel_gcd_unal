@@ -1,0 +1,1 @@
+/home/dnmaldonador/Documents/sobel_gcd_unal/src/sobel_enhancement/src/verilog/sobel_control.svh

@@ -20,9 +20,9 @@ module tt_um_sobel_gcd_unal (
     logic spi_cs_i;
     logic spi_sdo_o;
 
-    assign spi_sck_i = ui_in[0];
-    assign spi_sdi_i = ui_in[1];
-    assign spi_cs_i = ui_in[2];
+    assign spi_sck_i = uio_in[0];
+    assign spi_sdi_i = uio_in[1];
+    assign spi_cs_i = uio_in[2];
     assign uio_out[3] = spi_sdo_o;
 
     logic [DATA_WIDTH-1:0] operand_a;
