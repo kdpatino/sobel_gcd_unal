@@ -156,9 +156,10 @@ module sobel_gcd_spi #(
             input_px_gray_o <= '0;
             data_tx_sel <= '0;
         end else begin
-            if (data_rx[15])
+            if (data_rx[15]) begin
                 input_px_gray_o <= data_rx[PIXEL_WIDTH-1:0];
                 data_tx_sel <= 1'b1;
+            end
             else begin
                 data_tx_sel <= '0;
                 case(data_rx[14:13])

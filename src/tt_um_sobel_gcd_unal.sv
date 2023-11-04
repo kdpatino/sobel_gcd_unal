@@ -23,11 +23,12 @@ module tt_um_sobel_gcd_unal (
     );
     
     gcd_top gcd0 (
-        .operand_a_i(operand_a_i)
+        .clk_i(clk_i)
+        ,.nreset_i(nreset_i)
+        
+        ,.operand_a_i(operand_a_i)
         ,.operand_b_i(operand_b_i)
         ,.gcd_enable_i(gcd_enable_i)
-        ,.clk_i(clk_i)
-        ,.nreset_i(nreset_i)
         ,.gcd_o(gcd_o)
         ,.gcd_done_o(gcd_done_o)
     );
@@ -56,17 +57,10 @@ module tt_um_sobel_gcd_unal (
 
         ,.operand_a_o(operand_a)
         ,.operand_b_o(operand_b)
-        ,.gcd_enable_o(gcd_enable)
         ,.gcd_i(gcd_o)
-        ,.gcd_done_i(gcd_done)
 
-        ,.prep_allowed(prep_allowed)
         ,.input_px_gray_o(input_px_gray)
-
         ,.output_px_sobel_i(output_px_sobel)
-
-        ,.pixel_completed_o(pixel_completed_o)
-        ,.prep_completed_o(prep_completed_o)
     );
 
 endmodule
