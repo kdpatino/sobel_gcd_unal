@@ -38,6 +38,11 @@ module tt_um_sobel_gcd_unal (
     logic [PIXEL_WIDTH-1:0] output_px_sobel;
     logic [DATA_WIDTH-1:0] gcd_o;
 
+    logic gcd_done;
+    logic gcd_enable;
+
+    assign uio_out[5] = gcd_done;
+
     logic clk_i;
     assign clk_i = clk;
 
@@ -55,9 +60,9 @@ module tt_um_sobel_gcd_unal (
         
         ,.operand_a_i(operand_a)
         ,.operand_b_i(operand_b)
-        ,.gcd_enable_i(gcd_enable_i)
+        ,.gcd_enable_i(gcd_enable)
         ,.gcd_o(gcd_o)
-        ,.gcd_done_o(gcd_done_o)
+        ,.gcd_done_o(gcd_done)
     );
 
     sobel_control sobel0 (
