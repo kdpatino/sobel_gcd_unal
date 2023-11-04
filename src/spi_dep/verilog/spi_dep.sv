@@ -127,7 +127,7 @@ module sobel_gcd_spi #(
             if(rxtx_done_rising)
                 data_rx <= spi_data_rx;
             else
-                data_rx <= adc_data_rx;
+                data_rx <= data_rx;
         end
     end
 

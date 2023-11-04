@@ -4,22 +4,7 @@ module spi_dep_async_nreset_synchronizer (
     input  logic tied_value_i,
     output logic nreset_o
     );
-
-    //==========================================================================
-    // Registers & connections
-    logic rstn_p1, rstn_p2;
-
-    //==========================================================================
-    // Assert & Property declaration
-    always_comb begin
-        if ($time > 0) begin
-            a_unknown_rstn: assert (!$isunknown(async_nreset_i)) else $error("async_rstn_synchronizer.sv: unknown value on rstn_i");
-        end
-    end
-
-    //==========================================================================
-    // Code
-
+    
     logic r_sync;
 
     always_ff @(posedge clk_i or negedge async_nreset_i) begin
