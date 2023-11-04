@@ -1,0 +1,12 @@
+**/env/
+**/dist/
+*.egg-info
+*pycache*
+__pycache__
+*sim_build*
+*.txt
+*.vvp
+*.vcd
+*.xml
+sobel_verilog.jpg
+runs*
