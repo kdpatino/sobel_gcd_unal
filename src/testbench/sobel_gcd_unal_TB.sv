@@ -83,7 +83,6 @@ module sobel_gcd_unal_TB ();
     end
     endtask
 
-
     initial begin
         $dumpfile("sobel_gcd_unal_TB.vcd");
         $dumpvars(-1, uut);
