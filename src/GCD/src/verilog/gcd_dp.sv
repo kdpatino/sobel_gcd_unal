@@ -77,7 +77,7 @@ module gcd_dp (
       else if(flag_finish_i) //if state is finish
       begin
         gcd_o <= operand_a_i== '0 ? gcd_inputs.a : gcd_inputs.b;
-        gcd_done_o <= 1;
+        gcd_done_o <= 1'b1;
       end 
   end
 
