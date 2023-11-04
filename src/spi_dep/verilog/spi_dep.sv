@@ -1,5 +1,4 @@
-`include "../../sobel_enhancement/src/verilog/sobel_control.svh"  //Maybe need to chnage this
-`include "../../GCD/src/include/sobel_control.svh"  //Maybe need to chnage this
+`include "async_nreset_synchronizer.sv"
 
 module sobel_gcd_spi #(
     parameter STREAM_DATA_WIDTH = 16

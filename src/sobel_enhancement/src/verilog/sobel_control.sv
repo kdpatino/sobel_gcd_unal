@@ -1,4 +1,4 @@
-`include "../verilog/sobel_control.svh" 
+`include "sobel_enhancement/src/verilog/sobel_control.svh" 
 
 module sobel_control (
         input logic    clk_i,

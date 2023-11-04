@@ -1,5 +1,5 @@
 
-`include "../include/gcd.svh"
+`include "GCD/src/include/gcd.svh"
 
 module gcd_fsm (
   input logic clk_i

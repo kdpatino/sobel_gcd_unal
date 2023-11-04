@@ -5,7 +5,6 @@ module spi_dep #(
     ,input logic sdi_i
     ,input logic cs_i
     ,output logic sdo_o
-
     ,input logic [WORD_SIZE-1:0] data_tx_i
     ,output logic [WORD_SIZE-1:0] data_rx_o
     ,output logic rxtx_done_o
