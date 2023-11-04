@@ -1,4 +1,5 @@
-`include "async_nreset_synchronizer.sv"
+`include "sobel_control.svh"  //Maybe need to chnage this
+`include "gcd.svh"  //Maybe need to chnage this
 
 module sobel_gcd_spi #(
     parameter STREAM_DATA_WIDTH = 16

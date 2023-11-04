@@ -1,5 +1,5 @@
-`include 
-`include "async_nreset_synchronizer.sv"
+`include "gcd.svh"
+`include "sobel_control.svh" 
 
 module tt_um_sobel_gcd_unal (
     input  wire [7:0] ui_in,    // Dedicated inputs - connected to the input switches
@@ -13,7 +13,7 @@ module tt_um_sobel_gcd_unal (
 );
     
     logic nreset_async_i;
-    assign nreset_async_i = reset_n;
+    assign nreset_async_i = rst_n;
 
     logic clk_i;
     assign clk_i = clk;
@@ -60,7 +60,7 @@ module tt_um_sobel_gcd_unal (
 
         ,.operand_a_o(operand_a)
         ,.operand_b_o(operand_b)
-        ,.gcd_i(gcd_o)
+        ,.gcd_o(gcd_o)
 
         ,.input_px_gray_o(input_px_gray)
         ,.output_px_sobel_i(output_px_sobel)

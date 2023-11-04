@@ -1,6 +1,24 @@
-TESTBENCH = sobel_gcd_unal
-SRCS = $(TESTBENCH)_TB.sv 
+
 SRC_FOLDER=/home/kevin/unal/OpenLane/designs/sobel_gcd_unal/src
+TESTBENCH = sobel_gcd_unal
+
+GCD_SRC=gcd_dp.sv \
+		gcd_fsm.sv \
+		gcd_top.sv
+
+SOBEL_SRC=sobel_control.sv \
+		  sobel_core.sv
+
+SPI_SRC=adc_spi.sv\
+		spi_dep.sv
+
+SRC=$(GCD_SRC) \
+	$(SOBEL_SRC) \
+	$(SPI_SRC) \
+	async_nreset_synchronizer.sv \
+	tt_um_sobel_gcd_unal.sv \
+	$(TESTBENCH)_TB.sv 
+
 
 all: simulate
 

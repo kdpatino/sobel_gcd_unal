@@ -1,4 +1,4 @@
-`include "GCD/src/include/gcd.svh"
+`include "gcd.svh"
 
 module gcd_top (
   input logic [DATA_WIDTH-1:0] operand_a_i 

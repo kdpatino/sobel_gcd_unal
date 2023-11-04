@@ -1,4 +1,4 @@
-`include "sobel_enhancement/src/verilog/sobel_control.svh" 
+`include "sobel_control.svh" 
 
 module sobel_core (
     input sobel_matrix matrix_pixels_i,
