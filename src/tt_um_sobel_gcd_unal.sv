@@ -11,9 +11,16 @@ module tt_um_sobel_gcd_unal (
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
 );
+    assign uio_oe = 8'b11101000; 
+    assign uio_out[2:0] = '0;
+    assign uio_out[4] = '0;
+    assign uio_out[6] = '0;
+    assign uo_out[7:0] = '0;
     
     logic nreset_async_i;
     assign nreset_async_i = rst_n;
+    
+    
     //SPI interface
     logic spi_sck_i;
     logic spi_sdi_i;
@@ -29,10 +36,23 @@ module tt_um_sobel_gcd_unal (
     logic [DATA_WIDTH-1:0] operand_b;
     logic [PIXEL_WIDTH-1:0] input_px_gray;
     logic [PIXEL_WIDTH-1:0] output_px_sobel;
+    logic [DATA_WIDTH-1:0] gcd_o;
+
+    logic gcd_done;
+    logic gcd_enable;
+    logic prep_allowed;
+    logic pixel_completed;
+    logic prep_completed;
+
+    assign gcd_enable = uio_in[4];
+    assign uio_out[5] = ui_in[0] ? pixel_completed : gcd_done;
+    assign prep_allowed = uio_in[6];
+    assign uio_out[7] = prep_completed;
 
     logic clk_i;
     assign clk_i = clk;
-    
+
+    logic nreset_i; 
     spi_dep_async_nreset_synchronizer adc_spi_nreset_sync0 (
         .clk_i(clk_i),
         .async_nreset_i(nreset_async_i),
@@ -46,9 +66,9 @@ module tt_um_sobel_gcd_unal (
         
         ,.operand_a_i(operand_a)
         ,.operand_b_i(operand_b)
-        ,.gcd_enable_i(gcd_enable_i)
+        ,.gcd_enable_i(gcd_enable)
         ,.gcd_o(gcd_o)
-        ,.gcd_done_o(gcd_done_o)
+        ,.gcd_done_o(gcd_done)
     );
 
     sobel_control sobel0 (
@@ -60,8 +80,8 @@ module tt_um_sobel_gcd_unal (
 
         ,.output_px_sobel_o(output_px_sobel)
 
-        ,.pixel_completed_o(pixel_completed_o)
-        ,.prep_completed_o(prep_completed_o)
+        ,.pixel_completed_o(pixel_completed)
+        ,.prep_completed_o(prep_completed)
     );
 
     sobel_gcd_spi spi0 (

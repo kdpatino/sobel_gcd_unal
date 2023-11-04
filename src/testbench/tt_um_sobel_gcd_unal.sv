@@ -1,1 +1,0 @@
-/home/dnmaldonador/Documents/sobel_gcd_unal/src/tt_um_sobel_gcd_unal.sv

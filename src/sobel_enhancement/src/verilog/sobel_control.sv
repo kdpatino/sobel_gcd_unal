@@ -90,7 +90,7 @@ module sobel_control (
                         if (i_sobel < IMAGE_HEIGHT-1) begin
                             i_sobel <= (i_sobel+1);
                         end else begin
-                            i_sobel = 0;
+                            i_sobel <= 0;
                         end
                     end
 

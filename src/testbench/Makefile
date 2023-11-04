@@ -1,5 +1,5 @@
 
-SRC_FOLDER=/home/dnmaldonador/Documents/sobel_gcd_unal/src
+SRC_FOLDER=/home/kevin/unal/OpenLane/designs/sobel_gcd_unal/src
 TESTBENCH = sobel_gcd_unal
 
 GCD_SRC=gcd_dp.sv \
@@ -12,11 +12,13 @@ SOBEL_SRC=sobel_control.sv \
 SPI_SRC=adc_spi.sv\
 		spi_dep.sv
 
+TOP_SRC=async_nreset_synchronizer.sv \
+		tt_um_sobel_gcd_unal.sv
+
 SRC=$(GCD_SRC) \
 	$(SOBEL_SRC) \
 	$(SPI_SRC) \
-	async_nreset_synchronizer.sv \
-	tt_um_sobel_gcd_unal.sv \
+	$(TOP_SRC) \
 	$(TESTBENCH)_TB.sv 
 
 
@@ -37,6 +39,6 @@ gtkwave: simulate
 
 clean:
 	rm -rf *.bin *.jpg *.txt *.blif *.out *.vvp *.vcd *~
-	rm $(GCD_SRC) $(SOBEL_SRC) 
+	rm $(GCD_SRC) $(SOBEL_SRC) $(SPI_SRC) $(TOP_SRC) *.svh 
 
 .PHONY: all clean
