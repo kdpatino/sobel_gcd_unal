@@ -1,1 +1,0 @@
-/home/dnmaldonador/Documents/sobel_gcd_unal/src/async_nreset_synchronizer.sv

@@ -1,1 +1,0 @@
-/home/dnmaldonador/Documents/sobel_gcd_unal/src/sobel_enhancement/src/sv_test_bench/sobel_control_TB.sv
