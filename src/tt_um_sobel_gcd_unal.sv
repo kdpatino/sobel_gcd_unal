@@ -11,9 +11,12 @@ module tt_um_sobel_gcd_unal (
     input  wire       clk,      // clock
     input  wire       rst_n     // reset_n - low to reset
 );
-    
+    assign uio_oe = 8'b11111000; 
+
     logic nreset_async_i;
     assign nreset_async_i = rst_n;
+    
+    
     //SPI interface
     logic spi_sck_i;
     logic spi_sdi_i;
@@ -25,14 +28,20 @@ module tt_um_sobel_gcd_unal (
     assign spi_cs_i = uio_in[2];
     assign uio_out[3] = spi_sdo_o;
 
+
+
+
+
     logic [DATA_WIDTH-1:0] operand_a;
     logic [DATA_WIDTH-1:0] operand_b;
     logic [PIXEL_WIDTH-1:0] input_px_gray;
     logic [PIXEL_WIDTH-1:0] output_px_sobel;
+    logic [DATA_WIDTH-1:0] gcd_o;
 
     logic clk_i;
     assign clk_i = clk;
-    
+
+    logic nreset_i; 
     spi_dep_async_nreset_synchronizer adc_spi_nreset_sync0 (
         .clk_i(clk_i),
         .async_nreset_i(nreset_async_i),

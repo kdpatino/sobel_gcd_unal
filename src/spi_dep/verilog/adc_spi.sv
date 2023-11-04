@@ -1,5 +1,5 @@
 module spi_dep #(
-    parameter WORD_SIZE = "mandatory"
+    parameter WORD_SIZE = 16
 )(
     input logic sck_i
     ,input logic sdi_i
