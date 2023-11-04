@@ -1,5 +1,4 @@
-`include "../../sobel_enhancement/src/verilog/sobel_control.svh"  //Maybe need to chnage this
-`include "../../GCD/src/include/sobel_control.svh"  //Maybe need to chnage this
+`include "async_nreset_synchronizer.sv"
 
 module sobel_gcd_spi #(
     parameter STREAM_DATA_WIDTH = 32
@@ -23,12 +22,12 @@ module sobel_gcd_spi #(
 
     //Sobel Interface
     ,output logic    prep_allowed
-    ,output logic    [PIXEL_WIDTH-1:0] input_px_gray_o
+    ,output logic    [PIXEL_WIDTH-1:0] input_px_gray_i
 
-    ,input logic   [PIXEL_WIDTH-1:0] output_px_sobel_i
+    ,output logic   [PIXEL_WIDTH-1:0] output_px_sobel_o
 
-    ,input logic   pixel_completed_i
-    ,input logic   prep_completed_i
+    ,output logic   pixel_completed_o
+    ,output logic   prep_completed_o
 );
     // nreset synchronization
     logic nreset_i;
